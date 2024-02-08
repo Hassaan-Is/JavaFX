@@ -20,13 +20,10 @@
     -fx-cursor: hand;
 }
 #exitButton{
-    -fx-background-color: grey;
+    -fx-background-color: #F6B17A;
     -fx-background-radius: 5px;
 }
 #exitButton:hover{
     -fx-opacity:0.8;
     -fx-cursor:hand;
-}
-#tableChaine{
-
 }
