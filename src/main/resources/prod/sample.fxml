@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prod.SideBarController">
+   <top>
+      <Pane id="dashboard" prefHeight="68.0" prefWidth="1080.0" stylesheets="@sidebar.css" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="exitButton" fx:id="exit" alignment="CENTER" layoutX="1032.0" layoutY="17.0" prefHeight="20.0" prefWidth="39.0" stylesheets="@sidebar.css" text="X" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane id="imagePan" layoutY="-68.0" prefHeight="166.0" prefWidth="200.0" stylesheets="@sidebar.css">
+               <children>
+                  <ImageView fitHeight="143.0" fitWidth="124.0" layoutX="31.0" layoutY="8.0">
+                     <image>
+                        <Image url="@images/logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <VBox id="sideBar" alignment="CENTER" layoutY="96.0" prefHeight="562.0" prefWidth="200.0" spacing="10.0" stylesheets="@sidebar.css">
+               <children>
+                  <Pane id="sidebarPan" prefHeight="97.0" prefWidth="200.0" stylesheets="@sidebar.css">
+                     <children>
+                        <Button id="linkButton" layoutX="7.0" layoutY="-2.0" mnemonicParsing="false" onAction="#home" prefHeight="99.0" prefWidth="210.0" style="-fx-background-color: none;" stylesheets="@sidebar.css" text="Accueil" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="17.0" layoutY="30.0">
+                           <image>
+                              <Image url="@images/logo-home.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane id="sidebarPan" prefHeight="97.0" prefWidth="200.0" stylesheets="@sidebar.css">
+                     <children>
+                        <Button id="linkButton" layoutX="7.0" layoutY="-2.0" mnemonicParsing="false" onAction="#chaine" prefHeight="99.0" prefWidth="210.0" style="-fx-background-color: none;" stylesheets="@sidebar.css" text="Chaines" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="17.0" layoutY="30.0">
+                           <image>
+                              <Image url="@images/logo-gear.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane id="sidebarPan" prefHeight="95.0" prefWidth="200.0" stylesheets="@sidebar.css">
+                     <children>
+                        <Pane prefHeight="97.0" prefWidth="200.0">
+                           <children>
+                              <Button id="linkButton" layoutX="7.0" layoutY="-2.0" mnemonicParsing="false" onAction="#stocks" prefHeight="99.0" prefWidth="210.0" style="-fx-background-color: none;" stylesheets="@sidebar.css" text="Stocks" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="17.0" layoutY="30.0">
+                                 <image>
+                                    <Image url="@images/logo-stock.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane id="sidebarPan" prefHeight="97.0" prefWidth="200.0" stylesheets="@sidebar.css">
+                     <children>
+                        <Button id="linkButton" layoutX="7.0" layoutY="-2.0" mnemonicParsing="false" onAction="#stocks" prefHeight="99.0" prefWidth="210.0" style="-fx-background-color: none;" stylesheets="@sidebar.css" text="Achats" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="17.0" layoutY="30.0">
+                           <image>
+                              <Image url="@images/logo-add.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane id="sidebarPan" prefHeight="97.0" prefWidth="200.0" stylesheets="@sidebar.css">
+                     <children>
+                        <Button id="linkButton" layoutX="7.0" layoutY="-2.0" mnemonicParsing="false" onAction="#stocks" prefHeight="99.0" prefWidth="210.0" style="-fx-background-color: none;" stylesheets="@sidebar.css" text="Calculs" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="17.0" layoutY="30.0">
+                           <image>
+                              <Image url="@images/logo-calculer.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <StackPane fx:id="contentArea" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="369.7142857142857" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="680.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
