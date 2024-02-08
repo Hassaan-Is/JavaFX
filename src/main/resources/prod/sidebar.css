@@ -20,7 +20,7 @@
     -fx-cursor: hand;
 }
 #exitButton{
-    -fx-background-color: #F6B17A;
+    -fx-background-color: grey;
     -fx-background-radius: 5px;
 }
 #exitButton:hover{
