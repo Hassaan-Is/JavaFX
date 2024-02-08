@@ -8,7 +8,7 @@
 <AnchorPane prefHeight="454.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prod.Home">
     <children>
       <Pane />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="197.0" text="Bienvenue sur l'application JavaFX">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="197.0" text="Bienvenue sur l'application">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
