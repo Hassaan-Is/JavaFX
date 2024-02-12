@@ -57,4 +57,11 @@ public class SideBarController implements Initializable {
         contentArea.getChildren().setAll(fxml);
     }
 
+    @FXML
+    public void commandes(ActionEvent actionEvent) throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("commandes.fxml"));
+        contentArea.getChildren().removeAll();
+        contentArea.getChildren().setAll(fxml);
+    }
+
 }
