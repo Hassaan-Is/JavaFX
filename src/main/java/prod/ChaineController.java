@@ -1,12 +1,9 @@
 package prod;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.BufferedReader;
@@ -33,38 +30,49 @@ public class ChaineController {
     @FXML
     private TableColumn<Chaine, Integer> c2Column21;
 
-
     @FXML
     private ListView<String> listCode;
+
+    @FXML
+    private TextField nbField;
+
+    @FXML
+    private Button validButton;
 
     public void initialize() {
         c1Column.setCellValueFactory(new PropertyValueFactory<>("code"));
         c2Column.setCellValueFactory(new PropertyValueFactory<>("nom"));
         c2Column1.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getElementsEntree()));
         c2Column2.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getElementsSortie()));
-        c2Column21.setCellValueFactory(new PropertyValueFactory<>("niveauActivite"));
-
+        c2Column21.setCellValueFactory(cellData -> new SimpleIntegerProperty(SessionManager.getNiveauActivite(cellData.getValue().getCode())).asObject());
 
         loadCsvData();
+        rempliListeCode();
+
+        // Ajout de l'action du bouton pour modifier le niveau d'activité
+        validButton.setOnAction(event -> {
+            String selectedCode = listCode.getSelectionModel().getSelectedItem();
+            if (selectedCode != null && !nbField.getText().isEmpty()) {
+                int newNiveauActivite = Integer.parseInt(nbField.getText());
+                modifNiveau(selectedCode, newNiveauActivite);
+                SessionManager.setNiveauActivite(selectedCode, newNiveauActivite); // Mettre à jour la valeur dans SessionManager
+            }
+        });
     }
 
     private void loadCsvData() {
         String csvFile = "src/main/java/prod/chaines.csv";
-        String line = "";
+        String line;
         String csvSeparator = ";";
-
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            br.readLine(); // Ignorer la première ligne du csv
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(csvSeparator);
-
-                // Extraire les données de chaque champ du CSV
                 String code = data[0];
                 String nom = data[1];
                 String elementsEntree = data[2];
                 String elementsSortie = data[3];
-
-                // Créer un objet Chaine avec les données extraites et l'ajouter à la TableView
-                Chaine chaine = new Chaine(code, nom, elementsEntree, elementsSortie, 0); // Niveau d'activité à 0 pour le moment
+                Chaine chaine = new Chaine(code, nom, elementsEntree, elementsSortie, 0);
                 tableView.getItems().add(chaine);
             }
         } catch (IOException e) {
@@ -73,29 +81,20 @@ public class ChaineController {
     }
 
     private void rempliListeCode() {
-        ObservableList<String> items = FXCollections.observableArrayList();
-
-        String csvFile = "src/main/java/prod/chaines.csv";
-        String line;
-        String csvSeparator = ";";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(csvSeparator);
-                // Ajoute le code à la liste des items
-                items.add(data[0]);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Ajoute les items à la ListView
-        listCode.setItems(items);
-
-        // Test console pour vérifier les codes ajoutés à la liste
-        for (String item : items) {
-            System.out.println("Code: " + item);
+        for (Chaine chaine : tableView.getItems()) {
+            listCode.getItems().add(chaine.getCode());
         }
     }
+
+    private void modifNiveau(String selectedCode, int newNiveauActivite) {
+        for (Chaine chaine : tableView.getItems()) {
+            if (chaine.getCode().equals(selectedCode)) {
+                chaine.setNiveauActivite(newNiveauActivite);System.out.println("Nouveau niveau d'activité pour " + selectedCode + ": " + newNiveauActivite);
+                break;
+            }
+        }
+        tableView.refresh(); // Rafraîchir la TableView pour refléter les modifications
+    }
+
 
 }
