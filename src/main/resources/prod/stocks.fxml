@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="prod.Stocks">
+
+<AnchorPane prefHeight="519.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prod.StocksController">
     <children>
-        <Label layoutX="229" layoutY="218" text="Stocks" textFill="#fffdfd">
-            <font>
-                <Font name="System Bold" size="36.0"/>
-            </font>
-        </Label>
+        <Pane prefHeight="336.0" prefWidth="555.0">
+            <children>
+                <Label layoutX="23.0" layoutY="14.0" text="Chaine de production">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <TableView id="tableStock" fx:id="tableView" layoutX="38.0" layoutY="55.0" prefHeight="290.0" prefWidth="656.0" stylesheets="@sidebar.css">
+                    <columns>
+                        <TableColumn id="code" fx:id="c1code" prefWidth="123.99996185302734" text="Code" />
+                        <TableColumn id="nom" fx:id="c2nom" prefWidth="136.0000457763672" text="Nom" />
+                        <TableColumn id="quantite" fx:id="c3quantite" prefWidth="140.0" text="Quantite" />
+                        <TableColumn id="unite" fx:id="c4unite" minWidth="0.0" prefWidth="130.85711669921875" text="Unite" />
+                        <TableColumn id="achat" fx:id="c5achat" maxWidth="160.5714111328125" prefWidth="125.71429443359375" text="Prix d'achat" />
+                        <TableColumn id="vente" fx:id="c6vente" maxWidth="160.5714111328125" prefWidth="125.71429443359375" text="Prix de vente" />
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+        <ListView id="listCode" layoutX="39.0" layoutY="365.0" prefHeight="57.0" prefWidth="200.0" />
     </children>
 </AnchorPane>
