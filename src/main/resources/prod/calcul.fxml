@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prod.CalculController">
+    <children>
+        <Pane prefHeight="520.0" prefWidth="771.0">
+            <children>
+                <TableView id="tableChaine" fx:id="tableChaine" layoutX="41.0" layoutY="48.0" prefHeight="219.0" prefWidth="331.0">
+                    <columns>
+                        <TableColumn id="code" fx:id="c1" prefWidth="100.0" text="Code" />
+                        <TableColumn id="niveauActivite" fx:id="c2" prefWidth="230.0" text="Niveau d'activité" />
+                    </columns>
+                </TableView>
+                <Label layoutX="46.0" layoutY="17.0" text="Niveau d'activité">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="415.0" layoutY="17.0" text="Calcul">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <TableView id="tableCode" fx:id="tableCode" layoutX="403.0" layoutY="47.0" prefHeight="178.0" prefWidth="159.0">
+                    <columns>
+                        <TableColumn id="code" fx:id="c3" prefWidth="155.0" text="Chaine" />
+                    </columns>
+                </TableView>
+                <Button id="calculButton" fx:id="calculButton" layoutX="417.0" layoutY="231.0" mnemonicParsing="false" text="Calculer">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+                <Label layoutX="587.0" layoutY="50.0" text="Niveau d'activité">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="46.0" layoutY="296.0" text="Indicateur de valeur">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <TextField layoutX="578.0" layoutY="72.0" />
+                <Label id="lblIndic" fx:id="lblIndic" layoutX="51.0" layoutY="329.0" text="">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label layoutX="48.0" layoutY="359.0" text="Indicateur de commande">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="53.0" layoutY="392.0" text="76%">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
+
