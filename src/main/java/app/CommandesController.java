@@ -141,8 +141,6 @@ public class CommandesController {
         tableView.refresh(); // Rafraîchir la TableView pour refléter les modifications
     }
 
-
-
     private void remplirListeCode() {
         for (Commandes commande : commandesList) {
             listCommandes.getItems().add(commande.getCode());

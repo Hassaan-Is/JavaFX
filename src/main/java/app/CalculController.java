@@ -5,16 +5,16 @@ import java.util.Map;
 public class CalculController {
 
     public void handleCalculButtonAction() {
-        verifierDisponibiliteStockEtBenefices();
+        calcul();
     }
 
 
-    public void verifierDisponibiliteStockEtBenefices() {
+    public void calcul() {
         ChaineModel chaineModel = ChaineModel.getInstance();
         CommandesModel commandesModel = CommandesModel.getInstance();
 
-        // Récupérer la chaîne de production avec le code "C001"
-        Chaine chaine = chaineModel.getChaine("C001");
+        // Récupérer la chaîne de production avec le code "C002"
+        Chaine chaine = chaineModel.getChaine("C002");
         if (chaine != null) {
             // Vérifier si le niveau d'activité est supérieur à zéro
             int niveauActivite = chaine.getNiveauActivite();
@@ -25,37 +25,18 @@ public class CalculController {
                 // Initialiser le flag pour indiquer si le stock est suffisant
                 boolean stockSuffisant = true;
 
-                // Initialiser la variable pour calculer les bénéfices
-                float benefices = 0;
-
                 // Parcourir chaque élément et sa quantité nécessaire
                 for (Map.Entry<String, Float> entree : entrees.entrySet()) {
                     String codeElement = entree.getKey();
-                    Float quantiteDemandee = entree.getValue();
-                    quantiteDemandee=quantiteDemandee*niveauActivite;
+                    Float quantiteDemandee = entree.getValue() * niveauActivite;
 
                     // Récupérer la quantité disponible dans la commande pour cet élément
                     float quantiteDisponible = commandesModel.getQuantite(codeElement);
 
-                    // Afficher les informations sur l'élément en cours de traitement
-                    System.out.println("Traitement de l'élément : " + codeElement);
-                    System.out.println("Quantité demandée : " + quantiteDemandee);
-                    System.out.println("Quantité disponible en stock : " + quantiteDisponible);
-
                     // Vérifier si la quantité disponible est suffisante pour cet élément
                     if (quantiteDisponible >= quantiteDemandee) {
-                        // Récupérer l'objet Commandes correspondant à cet élément
-                        Commandes commande = commandesModel.getCommandes(codeElement);
-                        if (commande != null) {
-                            // Calculer le coût des éléments en entrée pour cet élément
-                            float coutEntree = commande.getPrixAchat() * quantiteDemandee;
-
-                            // Ajouter le coût de cet élément au coût total des éléments en entrée
-                            benefices -= coutEntree;
-
-                            // Afficher le coût de l'élément en entrée
-                            System.out.println("Coût d'entrée pour l'élément : " + coutEntree);
-                        }
+                        // Déduire la quantité utilisée du stock
+                        commandesModel.decrementerStock(codeElement, quantiteDemandee);
                     } else {
                         // Le stock est insuffisant pour cet élément
                         stockSuffisant = false;
@@ -63,28 +44,23 @@ public class CalculController {
                     }
                 }
 
-                // Récupérer le code de l'élément de sortie
-                String codeElementSortie = chaine.getSorties().keySet().iterator().next();
-                Commandes commandeSortie = commandesModel.getCommandes(codeElementSortie);
+                // Si le stock est suffisant pour tous les éléments en entrée
+                if (stockSuffisant) {
+                    // Réinitialiser le niveau d'activité à zéro
+                    chaine.setNiveauActivite(0);
+                    System.out.println("Chaîne de production satisfaite. Niveau d'activité réinitialisé à zéro.");
 
-                // Vérifier si le stock est suffisant pour tous les éléments en entrée et si l'élément de sortie est disponible
-                if (stockSuffisant && commandeSortie != null) {
-                    // Calculer le prix d'achat total des éléments en entrée
-                    // Cela peut nécessiter des ajustements en fonction de la structure de vos données
-                    // Ici, nous supposons que chaque élément en entrée a le même prix d'achat
-                    float prixAchatTotalEntrees = entrees.size() * commandeSortie.getPrixAchat() * niveauActivite;
+                    // Mettre à jour les stocks pour refléter la production
+                    for (Map.Entry<String, Float> entree : entrees.entrySet()) {
+                        String codeElement = entree.getKey();
+                        Float quantiteDemandee = entree.getValue() * niveauActivite;
+                        // Déduire la quantité utilisée du stock
+                        commandesModel.decrementerStock(codeElement, quantiteDemandee);
+                    }
 
-                    // Calculer les bénéfices en soustrayant le prix de vente de l'élément de sortie du prix d'achat total des éléments en entrée
-                    benefices += commandeSortie.getPrixVente() - prixAchatTotalEntrees;
-
-                    // Afficher le prix d'achat total des éléments en entrée
-                    System.out.println("Prix d'achat total des éléments en entrée : " + prixAchatTotalEntrees);
-
-                    // Afficher les bénéfices totaux
-                    System.out.println("Bénéfices totaux : " + benefices);
+                    // Effectuer d'autres opérations si nécessaire
                 } else {
-                    // Le stock est insuffisant pour au moins un élément en entrée ou l'élément de sortie n'est pas disponible
-                    System.out.println("Stock insuffisant pour au moins un élément en entrée de la chaîne de production ou l'élément de sortie n'est pas disponible.");
+                    System.out.println("Stock insuffisant pour au moins un élément en entrée de la chaîne de production.");
                 }
             } else {
                 // Le niveau d'activité est égal à zéro, ne rien faire
