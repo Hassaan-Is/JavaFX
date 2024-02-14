@@ -3,18 +3,18 @@ package app;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Model {
+public class ChaineModel {
     private Map<String, Integer> niveauActiviteMap;
 
-    private static Model instance;
+    private static ChaineModel instance;
 
-    private Model() {
+    private ChaineModel() {
         niveauActiviteMap = new HashMap<>();
     }
 
-    public static synchronized Model getInstance() {
+    public static synchronized ChaineModel getInstance() {
         if (instance == null) {
-            instance = new Model();
+            instance = new ChaineModel();
         }
         return instance;
     }

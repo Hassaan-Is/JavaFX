@@ -73,7 +73,7 @@ public class ChaineController  {
         String csvFile = "src/main/java/app/chaines.csv";
         String line;
         String csvSeparator = ";";
-        Model model = Model.getInstance();
+        ChaineModel model = ChaineModel.getInstance();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             br.readLine(); // Ignorer la première ligne du csv
@@ -138,7 +138,7 @@ public class ChaineController  {
 
     private void modifNiveau(String codeUnique, int newNiveauActivite) {
         // Mise à jour du niveau d'activité dans le modèle de données
-        Model.getInstance().setNiveauActivite(codeUnique, newNiveauActivite);
+        ChaineModel.getInstance().setNiveauActivite(codeUnique, newNiveauActivite);
         // Rafraîchir l'affichage dans la TableView si nécessaire
         tableView.refresh(); // Rafraîchir l'affichage de la TableView
     }

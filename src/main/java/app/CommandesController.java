@@ -123,16 +123,22 @@ public class CommandesController {
     }
 
     private void modifQuantite(String selectedCode, int newQuantite) {
-        // Affichage de la quantité avant la modificationSystem.out.println("Quantité avant la modification pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
+        // Affichage de la quantité avant la modification
+        System.out.println("Quantité avant la modification pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
+
         for (Commandes commandes : commandesList) {
             if (commandes.getCode().equals(selectedCode)) {
                 commandes.setQuantite(newQuantite);
                 break;
             }
         }
-        CommandesModel.getInstance().setQuantite(selectedCode,newQuantite);// Affichage de la quantité après la modificationSystem.out.println("Nouvelle quantité pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
+
+        CommandesModel.getInstance().setQuantite(selectedCode, newQuantite); // Affichage de la quantité après la modification
+        System.out.println("Nouvelle quantité pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
+
         tableView.refresh(); // Rafraîchir la TableView pour refléter les modifications
     }
+
 
     private void remplirListeCode() {
         for (Commandes commande : commandesList) {
