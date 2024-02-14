@@ -1,5 +1,6 @@
 package app;
 
+import javafx.beans.property.SimpleFloatProperty; // Import de SimpleFloatProperty
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -7,13 +8,13 @@ public class Commandes {
     private final SimpleStringProperty code;
     private final SimpleIntegerProperty prixAchat;
     private final SimpleIntegerProperty prixVente;
-    private final SimpleIntegerProperty quantite;
+    private final SimpleFloatProperty quantite; // Modification de SimpleIntegerProperty à SimpleFloatProperty
 
-    public Commandes(String code, int prixAchat, int prixVente, int quantite) {
+    public Commandes(String code, int prixAchat, int prixVente, float quantite) { // Modification du type de données de quantite en float
         this.code = new SimpleStringProperty(code);
         this.prixAchat = new SimpleIntegerProperty(prixAchat);
         this.prixVente = new SimpleIntegerProperty(prixVente);
-        this.quantite = new SimpleIntegerProperty(quantite);
+        this.quantite = new SimpleFloatProperty(quantite); // Modification de SimpleIntegerProperty à SimpleFloatProperty
     }
 
     // Getters and setters
@@ -41,11 +42,11 @@ public class Commandes {
         this.prixVente.set(prixVente);
     }
 
-    public int getQuantite() {
+    public float getQuantite() { // Modification du type de retour en float
         return quantite.get();
     }
 
-    public void setQuantite(int quantite) {
+    public void setQuantite(float quantite) { // Modification du type de données en float
         this.quantite.set(quantite);
     }
 
@@ -62,7 +63,7 @@ public class Commandes {
         return prixVente;
     }
 
-    public SimpleIntegerProperty quantiteProperty() {
+    public SimpleFloatProperty quantiteProperty() { // Modification de SimpleIntegerProperty à SimpleFloatProperty
         return quantite;
     }
 }

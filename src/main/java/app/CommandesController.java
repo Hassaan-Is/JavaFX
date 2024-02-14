@@ -1,5 +1,6 @@
 package app;
 
+import javafx.beans.property.SimpleFloatProperty; // Import de SimpleFloatProperty
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class CommandesController {
     private TableColumn<Commandes, Integer> c3Column;
 
     @FXML
-    private TableColumn<Commandes, Integer> c4Column;
+    private TableColumn<Commandes, Float> c4Column; // Mise à jour du type de données de la colonne c4Column
 
     @FXML
     private ListView<String> listCommandes;
@@ -47,11 +48,11 @@ public class CommandesController {
         c1Column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCode()));
         c2Column.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPrixAchat()).asObject());
         c3Column.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPrixVente()).asObject());
-        c4Column.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantite()).asObject());
+        c4Column.setCellValueFactory(cellData -> new SimpleFloatProperty(cellData.getValue().getQuantite()).asObject()); // Mise à jour de la valeur de la propriété
 
         loadListViewData();
         remplirListeCode();
-        applyIntegerFormatter();
+        applyFloatFormatter();
         // Gérer l'action du bouton de validation
         handleValidButtonAction();
     }
@@ -69,9 +70,11 @@ public class CommandesController {
                 int prixAchat = "NA".equals(data[1]) ? 0 : Integer.parseInt(data[1]);
                 int prixVente = "NA".equals(data[2]) ? 0 : Integer.parseInt(data[2]);
 
-                int quantite = commandesModel.getQuantite(code);
+                float quantite = commandesModel.getQuantite(code);
 
                 Commandes commande = new Commandes(code, prixAchat, prixVente, quantite);
+                commandesModel.setCommandes(code,commande);
+
                 commandesList.add(commande);
                 tableView.getItems().add(commande);
             }
@@ -80,28 +83,27 @@ public class CommandesController {
         }
     }
 
-
-    // Créer un formatteur de texte limitant l'entrée à des entiers
-    private UnaryOperator<TextFormatter.Change> createIntegerFilter() {
+    // Créer un formatteur de texte limitant l'entrée à des nombres flottants
+    private UnaryOperator<TextFormatter.Change> createFloatFilter() {
         return change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("-?\\d*")) { // Vérifier si le nouveau texte est un nombre entier
-                return change; // Autoriser le changement
+            if (newText.matches("-?\\d*\\.?\\d*")) {
+                return change;
             }
-            return null; // Ignorer le changement
+            return null;
         };
     }
 
     // Appliquer le formatteur de texte au champ de texte
-    private void applyIntegerFormatter() {
-        nbField.setTextFormatter(new TextFormatter<>(createIntegerFilter()));
+    private void applyFloatFormatter() {
+        nbField.setTextFormatter(new TextFormatter<>(createFloatFilter()));
     }
 
     private void handleValidButtonAction() {
         validCommande.setOnAction(event -> {
             String selectedCode = listCommandes.getSelectionModel().getSelectedItem();
             if (selectedCode != null && !nbField.getText().isEmpty()) {
-                int newQuantite = Integer.parseInt(nbField.getText());
+                float newQuantite = Float.parseFloat(nbField.getText()); // Modification du type de données
                 modifQuantite(selectedCode, newQuantite);
                 // Mettre à jour la cellule correspondante dans la TableView
                 for (Commandes commandes : commandesList) {
@@ -115,17 +117,14 @@ public class CommandesController {
         });
     }
 
-
     private void loadListViewData() {
         for (Commandes commande : commandesList) {
             listCommandes.getItems().add(commande.getCode());
         }
     }
 
-    private void modifQuantite(String selectedCode, int newQuantite) {
-        // Affichage de la quantité avant la modification
-        System.out.println("Quantité avant la modification pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
-
+    private void modifQuantite(String selectedCode, float newQuantite) {
+        // Mettre à jour la quantité dans la liste commandesList
         for (Commandes commandes : commandesList) {
             if (commandes.getCode().equals(selectedCode)) {
                 commandes.setQuantite(newQuantite);
@@ -133,11 +132,15 @@ public class CommandesController {
             }
         }
 
-        CommandesModel.getInstance().setQuantite(selectedCode, newQuantite); // Affichage de la quantité après la modification
-        System.out.println("Nouvelle quantité pour " + selectedCode + ": " + CommandesModel.getInstance().getQuantite(selectedCode));
+        // Stocker la nouvelle quantité dans le modèle CommandesModel
+        CommandesModel.getInstance().setQuantite(selectedCode, newQuantite);
+
+        // Afficher la nouvelle quantité
+        System.out.println("Nouvelle quantité pour " + selectedCode + ": " + newQuantite);
 
         tableView.refresh(); // Rafraîchir la TableView pour refléter les modifications
     }
+
 
 
     private void remplirListeCode() {

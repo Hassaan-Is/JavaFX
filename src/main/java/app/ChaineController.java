@@ -90,6 +90,7 @@ public class ChaineController  {
 
                 // Création d'un nouvel objet Chaine et ajout à la liste
                 Chaine chaine = new Chaine(code, nom, entrees, sorties, niveauActivite);
+                model.setChaine(code,chaine);
                 tableView.getItems().add(chaine);
                 chaines.add(chaine);
             }

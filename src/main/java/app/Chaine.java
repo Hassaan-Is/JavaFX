@@ -45,13 +45,14 @@ public class Chaine {
         this.nom = nom;
     }
 
+
     public Integer getNiveauActivite() {
         return niveauActivite;
     }
-
     public void setNiveauActivite(Integer niveauActivite) {
         this.niveauActivite = niveauActivite;
     }
+
 
     public Map<String, Float> getEntrees() {
         return entrees;
@@ -64,18 +65,31 @@ public class Chaine {
     public Map<String, Float> getSorties() {
         return sorties;
     }
-
     public void setSorties(Map<String, Float> sorties) {
         this.sorties = sorties;
     }
 
+
+    public Set<String> getElementSortie() {
+        return sorties.keySet();
+    }
+    public Set<Float> getQuantiteSortie() {
+        return new HashSet<>(sorties.values());
+    }
+
     public Set<String> getElementsEntree() {
+        return entrees.keySet();
+    }
+    public Set<String> setElementsEntree() {
         return entrees.keySet();
     }
 
     public Set<Float> getQuantiteEntree() {
         return new HashSet<>(entrees.values());
     }
+
+
+
 
 
     // Fonction pour récupérer uniquement les clés des sorties (les éléments)
