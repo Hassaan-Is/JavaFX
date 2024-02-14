@@ -11,7 +11,7 @@
     -fx-background-color: none;
 }
 #imagePan{
--fx-background-color: white;
+    -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
 }
 
@@ -26,4 +26,13 @@
 #exitButton:hover{
     -fx-opacity:0.8;
     -fx-cursor:hand;
+}
+
+#calculButton{
+    -fx-background-color: #F6B17A;
+    -fx-background-radius: 3px;
+}
+#calculButton:hover {
+    -fx-opacity:80%;
+    -fx-cursor: hand;
 }

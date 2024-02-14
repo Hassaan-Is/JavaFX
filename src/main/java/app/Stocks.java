@@ -1,4 +1,4 @@
-package prod;
+package app;
 
 public class Stocks {
 }

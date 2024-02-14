@@ -1,4 +1,4 @@
-package prod;
+package app;
 
 public class SharedDataModel {
     private static int niveauActivite = 0;

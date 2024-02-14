@@ -4,8 +4,8 @@ module MyApp {
     requires java.logging;
 
     opens com.example.javafx to javafx.fxml;
-    opens prod to javafx.fxml;
+    opens app to javafx.fxml;
 
     exports com.example.javafx;
-    exports prod;
+    exports app;
 }

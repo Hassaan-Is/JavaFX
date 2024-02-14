@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="prod.Stocks">
+            fx:controller="app.Stocks">
     <children>
         <Label layoutX="229" layoutY="218" text="Stocks" textFill="#fffdfd">
             <font>
