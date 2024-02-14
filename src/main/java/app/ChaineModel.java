@@ -20,6 +20,10 @@ public class ChaineModel {
         }
         return instance;
     }
+    public Map<String, Chaine> getChaineMap() {
+        return chaineMap;
+    }
+
 
     // Getter pour récupérer une instance de Chaine à partir du codeUnique
     public Chaine getChaine(String codeUnique) {

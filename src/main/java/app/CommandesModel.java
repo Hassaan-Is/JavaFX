@@ -21,6 +21,18 @@ public class CommandesModel {
         return instance;
     }
 
+
+
+    // Méthode pour soustraire les stocks utilisés
+    public void soustraireStock(String codeElement, float quantiteUtilisee) {
+        // Récupérer la quantité actuelle en stock
+        Float quantiteActuelle = quantiteMap.getOrDefault(codeElement, 0f); // Conversion explicite
+
+        // Mettre à jour la quantité en stock en soustrayant la quantité utilisée
+        quantiteMap.put(codeElement, quantiteActuelle - quantiteUtilisee);
+    }
+
+
     public float getQuantite(String codeUnique) { // Modification du type de retour de int à float
         return quantiteMap.getOrDefault(codeUnique, 0f); // Modification de 0 à 0f pour indiquer un float
     }
