@@ -134,10 +134,6 @@ public class CommandesController {
 
         // Stocker la nouvelle quantité dans le modèle CommandesModel
         CommandesModel.getInstance().setQuantite(selectedCode, newQuantite);
-
-        // Afficher la nouvelle quantité
-        System.out.println("Nouvelle quantité pour " + selectedCode + ": " + newQuantite);
-
         tableView.refresh(); // Rafraîchir la TableView pour refléter les modifications
     }
 
