@@ -4,17 +4,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane prefHeight="650.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.CalculController">
    <children>
       <Pane prefHeight="651.0" prefWidth="881.0" stylesheets="@sidebar.css">
          <children>
-            <Button id="calculButton" fx:id="calculButton" layoutX="319.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleCalculButtonAction" prefHeight="49.0" prefWidth="298.0" stylesheets="@sidebar.css" text="Simuler" textFill="WHITE">
+            <Button id="calculButton" fx:id="calculButton" layoutX="321.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleCalculButtonAction" prefHeight="49.0" prefWidth="298.0" stylesheets="@sidebar.css" text="Simuler" textFill="WHITE">
 
                 <font>
-                  <Font size="24.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Button>
+            <TextFlow id="indicateurCommande" fx:id="indicateurCommande" layoutX="166.0" layoutY="209.0" prefHeight="40.0" prefWidth="600.0" stylesheets="@sidebar.css" />
+            <TextFlow id="indicateurValeur" fx:id="indicateurValeur" layoutX="160.0" layoutY="306.0" prefHeight="40.0" prefWidth="600.0" stylesheets="@sidebar.css" />
          </children>
       </Pane>
    </children>

@@ -1,73 +1,87 @@
 package app;
 
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
 import java.util.Map;
 
 public class CalculController {
+
+    @FXML
+    private TextFlow indicateurCommande;
+    @FXML
+    private TextFlow indicateurValeur;
 
     public void handleCalculButtonAction() {
         calcul();
     }
 
-
     public void calcul() {
         ChaineModel chaineModel = ChaineModel.getInstance();
         CommandesModel commandesModel = CommandesModel.getInstance();
 
-        // Récupérer la chaîne de production avec le code "C002"
-        Chaine chaine = chaineModel.getChaine("C002");
-        if (chaine != null) {
-            // Vérifier si le niveau d'activité est supérieur à zéro
+        float beneficeTotal = 0.0f;
+        int chainesSatisfaites = 0; // Initialiser le compteur de chaînes satisfaites
+
+        for (Chaine chaine : chaineModel.getAllChaine()) {
             int niveauActivite = chaine.getNiveauActivite();
             if (niveauActivite > 0) {
-                // Récupérer les entrées de la chaîne de production
                 Map<String, Float> entrees = chaine.getEntrees();
+                Map<String, Float> sorties = chaine.getSorties();
 
-                // Initialiser le flag pour indiquer si le stock est suffisant
-                boolean stockSuffisant = true;
+                boolean tousStocksSuffisants = true;
 
-                // Parcourir chaque élément et sa quantité nécessaire
                 for (Map.Entry<String, Float> entree : entrees.entrySet()) {
                     String codeElement = entree.getKey();
                     Float quantiteDemandee = entree.getValue() * niveauActivite;
-
-                    // Récupérer la quantité disponible dans la commande pour cet élément
                     float quantiteDisponible = commandesModel.getQuantite(codeElement);
-
-                    // Vérifier si la quantité disponible est suffisante pour cet élément
-                    if (quantiteDisponible >= quantiteDemandee) {
-                        // Déduire la quantité utilisée du stock
-                        commandesModel.decrementerStock(codeElement, quantiteDemandee);
-                    } else {
-                        // Le stock est insuffisant pour cet élément
-                        stockSuffisant = false;
-                        System.out.println("Attention : Stock insuffisant pour l'élément '" + codeElement + "'.");
+                    if (quantiteDisponible < quantiteDemandee) {
+                        tousStocksSuffisants = false;
                     }
                 }
 
-                // Si le stock est suffisant pour tous les éléments en entrée
-                if (stockSuffisant) {
-                    // Réinitialiser le niveau d'activité à zéro
-                    chaine.setNiveauActivite(0);
-                    System.out.println("Chaîne de production satisfaite. Niveau d'activité réinitialisé à zéro.");
+                if (tousStocksSuffisants) {
+                    float beneficeChaine = 0.0f;
 
-                    // Mettre à jour les stocks pour refléter la production
                     for (Map.Entry<String, Float> entree : entrees.entrySet()) {
-                        String codeElement = entree.getKey();
+                        String codeElementEntree = entree.getKey();
                         Float quantiteDemandee = entree.getValue() * niveauActivite;
-                        // Déduire la quantité utilisée du stock
-                        commandesModel.decrementerStock(codeElement, quantiteDemandee);
+                        Commandes commandeEntree = commandesModel.getCommandes(codeElementEntree);
+                        if (commandeEntree != null) {
+                            int prixAchat = commandeEntree.getPrixAchat();
+                            float coutAchat = prixAchat * quantiteDemandee;
+                            beneficeChaine -= coutAchat;
+                            commandesModel.setQuantite(codeElementEntree, commandesModel.getQuantite(codeElementEntree) - quantiteDemandee); // Soustraire les stocks utilisés
+                        }
                     }
 
-                    // Effectuer d'autres opérations si nécessaire
-                } else {
-                    System.out.println("Stock insuffisant pour au moins un élément en entrée de la chaîne de production.");
+                    for (Map.Entry<String, Float> sortie : sorties.entrySet()) {
+                        String codeElementSortie = sortie.getKey();
+                        Float quantiteSortieProduite = sortie.getValue() * niveauActivite;
+                        Commandes commandeSortie = commandesModel.getCommandes(codeElementSortie);
+                        if (commandeSortie != null) {
+                            Float prixVente = (float) commandeSortie.getPrixVente();
+                            float revenuVente = prixVente * quantiteSortieProduite;
+                            beneficeChaine += revenuVente;
+                            commandesModel.setQuantite(codeElementSortie, commandesModel.getQuantite(codeElementSortie) + quantiteSortieProduite);
+                        }
+                    }
+
+                    beneficeTotal += beneficeChaine;
+                    chainesSatisfaites++;
                 }
-            } else {
-                // Le niveau d'activité est égal à zéro, ne rien faire
-                System.out.println("Le niveau d'activité est égal à zéro, aucun calcul nécessaire.");
             }
-        } else {
-            System.out.println("Aucune chaîne de production trouvée");
         }
+
+        // Calculer le pourcentage de chaînes satisfaites
+        int nombreTotalChaines = chaineModel.getAllChaine().size();
+        double pourcentageChainesSatisfaites = (double) chainesSatisfaites / nombreTotalChaines * 100;
+
+        // Ajouter le bénéfice total et le pourcentage de chaînes satisfaites dans le TextFlow
+        Text textBenefice = new Text("Indicateur de valeur : " + String.format("%.1f", beneficeTotal) + "\n");
+        Text textPourcentage = new Text("Indicateur de commande : " + String.format("%.1f", pourcentageChainesSatisfaites) + "%\n");
+        indicateurCommande.getChildren().addAll(textPourcentage);
+        indicateurValeur.getChildren().addAll(textBenefice);
     }
 }

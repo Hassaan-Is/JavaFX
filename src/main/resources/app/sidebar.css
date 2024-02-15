@@ -36,3 +36,7 @@
     -fx-opacity:80%;
     -fx-cursor: hand;
 }
+
+#indicateurCommande, #indicateurValeur{
+   -fx-font-size: 26px;
+}

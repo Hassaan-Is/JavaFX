@@ -1,6 +1,8 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChaineModel {
@@ -20,10 +22,9 @@ public class ChaineModel {
         }
         return instance;
     }
-    public Map<String, Chaine> getChaineMap() {
-        return chaineMap;
+    public List<Chaine> getAllChaine() {
+        return new ArrayList<>(chaineMap.values());
     }
-
 
     // Getter pour récupérer une instance de Chaine à partir du codeUnique
     public Chaine getChaine(String codeUnique) {
