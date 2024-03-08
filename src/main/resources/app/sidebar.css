@@ -11,7 +11,7 @@
     -fx-background-color: none;
 }
 #imagePan{
--fx-background-color: white;
+    -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
 }
 
@@ -27,6 +27,16 @@
     -fx-opacity:0.8;
     -fx-cursor:hand;
 }
-#tableChaine{
 
+#calculButton{
+    -fx-background-color: #424769;
+    -fx-background-radius: 3px;
+}
+#calculButton:hover {
+    -fx-opacity:80%;
+    -fx-cursor: hand;
+}
+
+#indicateurCommande, #indicateurValeur{
+   -fx-font-size: 26px;
 }

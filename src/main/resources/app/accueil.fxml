@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="454.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prod.Home">
+<AnchorPane prefHeight="650.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Home">
     <children>
       <Pane />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="197.0" text="Bienvenue sur l'application JavaFX">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="147.0" layoutY="298.0" text="Bienvenue sur l'application JavaFX">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
